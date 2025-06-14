@@ -2,18 +2,19 @@
 
 import sanitizeHtml from 'sanitize-html';
 
-export default function BlogCard ({title, content, id,created_at, author} : Props) {
+export default function BlogCard ({title, content, id, created_at, author} : Props) {
 
+    const blogContent: string = content != undefined ? content : "";
     return<div className="h-60 cursor-pointer overflow-hidden border-1 hover:shadow-lg transition-shadow rounded-xl">
         <div className="py-3 px-5" onClick={() => window.location.href = `/blogs/${author}/${id}`}>
             <div className="text-2xl font-bold mx-2 my-1 border-b-1 border-slate-500">
                 {title}
             </div>
-            <div className="text-md px-4 py-2 h-36 text-clip overflow-hidden" dangerouslySetInnerHTML={{__html: sanitizeHtml(content)}}/>
+            <div className="text-md px-4 py-2 h-36 text-clip overflow-hidden" dangerouslySetInnerHTML={{__html: sanitizeHtml(blogContent)}}/>
         </div>
         <div className="border-t-1 flex text-sm">
             <div className="flex-1 py-1 pl-3">
-                Posted at: {created_at}
+                Posted by: <b>{author}</b> at: <b>{created_at}</b>
             </div>
             <div className="flex-1 flex justify-end py-1 pr-3">
                 Click to view

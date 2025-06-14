@@ -4,7 +4,7 @@ import storage from "redux-persist/es/storage";
 import counterReducer from "./counter/counterSlice";
 import blogReducer from "./blogs/blogSlice";
 import userReducer from "./user/userSlice"
-import { persistReducer, REGISTER } from "redux-persist";
+import { persistReducer } from "redux-persist";
 import { persistStore } from "redux-persist";
 
 const persistConfig = {
@@ -26,7 +26,7 @@ export const store = configureStore({
     middleware: (getMiddleware) => {
       const middleware = getMiddleware({
         serializableCheck: {
-          ignoreActions: [REGISTER]
+          ignoreActions: true
         }
           
       })

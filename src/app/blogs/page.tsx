@@ -7,14 +7,16 @@ import BlogCard from "../component/BlogCard";
 
 export default function BlogNotFound(){
     
-    const [blogs, setBlogs] = useState([]);
+    const [blogs, setBlogs] = useState<Props[]>([]);
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(6);
 
     async function initialize(){
         const {data} = await supabase.from("blogs").select().order("created_at", {"ascending" : false});
         
-        setBlogs(data);
+        if(data != null){
+            setBlogs(data);
+        }
     }
 
     const [didItRun, setDidItRun] = useState(false);
@@ -23,7 +25,7 @@ export default function BlogNotFound(){
             initialize();
             setDidItRun(true);
         }
-    })
+    }, [didItRun])
 
     return !didItRun ? "" : <PageLayout title="Recent Blogs" inDashboard={false}>
         <div className="flex flex-col h-full">
@@ -31,7 +33,8 @@ export default function BlogNotFound(){
                 {
                     blogs.map((blog, i) => {
                         if(i >= min && i < max){
-                            const d = new Date(blog["created_at"]);
+                            const blogDate: string = blog.created_at != undefined ? blog.created_at : "";
+                            const d = new Date(blogDate);
 
                             return <BlogCard
                                 key={i} title={blog["title"]} author={blog["author"]} id={blog["id"]} content={blog["content"]} created_at={d.toLocaleDateString() + " " + d.toLocaleTimeString()}
@@ -42,7 +45,7 @@ export default function BlogNotFound(){
             </div>
             <div className="flex justify-center gap-2 h-14">
                 {
-                    Array.from({length: Math.round(blogs.length / 5)}).map((a, i) => {
+                    Array.from({length: Math.round(blogs.length / 5) }).map((a, i) => {
                         
                         let m = 0;
                         let x = 6;
@@ -63,4 +66,12 @@ export default function BlogNotFound(){
             </div>
         </div>
     </PageLayout>
+}
+
+interface Props {
+    content?: string,
+    title? : string,
+    id?: string | number,
+    author?: string,
+    created_at?: string;
 }

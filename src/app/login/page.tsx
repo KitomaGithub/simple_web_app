@@ -61,34 +61,46 @@ export default function Login() {
     }
 
 
-    return <div className="h-dvh flex justify-center items-center">
-        <div className="border-1 w-[350px] flex flex-col items-center py-10 gap-6 shadow-slate-400 shadow-md">
-            <div className="font-bold text-2xl">
-                Simple Blog
+return <div className="flex flex-col h-dvh">
+        <div className="flex border-b-2 shadow-md shadow-slate-400 h-16 flex-none" >
+            <div className="capitalize text-2xl font-bold flex flex-1 items-center px-10">
+                
             </div>
-            <div className="flex flex-col gap-4 w-[60%]">
-                <div className={`h-10 flex ${error ? "text-red-500" : "text-green-500"} items-center justify-center`}>
-                    {message}
-                </div>
-                <label className="block">
-                    <span className="block uppercase text-sm">email</span>
-                    <input id="email" onChange={(inp) => setEmail(inp.currentTarget.value)} className="border-1 w-full px-2 py-0.5 focus:ring-0 focus:outline-0"/>         
-                </label>
-                <label className="block relative">
-                    <span className="block uppercase text-sm">password</span>
-                    <div className="flex border-1 w-full">
-                        <input onChange={(inp) => setPassword(inp.currentTarget.value)} type={passwordType} id="password" className="w-[85%] px-2 py-0.5 focus:outline-none focus:ring-0"/>
-                        <button className="cursor-pointer ml-2" onClick={() => togglePassword()}> {showPassword ? <FaEyeSlash/> : <FaEye/>} </button>   
-                    </div>
-                </label>
-            </div>
-            <div className="flex flex-col w-[60%] items-center gap-3">
-                <button onClick={signIn} className="border-1 py-2 w-full cursor-pointer font-bold transition-all hover:shadow-md hover:shadow-slate-400 hover:bg-gray-100">
-                    LOGIN 
+            <div className="w-[600px] flex justify-end items-center gap-2">
+                <button onClick={() => window.location.href = "/blogs"} className={`text-xl font-bold px-5 py-2 rounded-xl border-1 cursor-pointer mr-10`}>
+                    See Blogs
                 </button>
-                <Link href={"register"} className="underline text-sm text-blue-600">
-                    Register
-                </Link>
+            </div>
+        </div>
+        <div className="flex-1 flex justify-center items-center">
+            <div className="border-1 w-[350px] flex flex-col items-center py-10 gap-6 shadow-slate-400 shadow-md">
+                <div className="font-bold text-2xl">
+                    Simple Blog
+                </div>
+                <div className="flex flex-col gap-4 w-[60%]">
+                    <div className={`h-10 flex ${error ? "text-red-500" : "text-green-500"} items-center justify-center`}>
+                        {message}
+                    </div>
+                    <label className="block">
+                        <span className="block uppercase text-sm">email</span>
+                        <input id="email" onChange={(inp) => setEmail(inp.currentTarget.value)} className="border-1 w-full px-2 py-0.5 focus:ring-0 focus:outline-0"/>         
+                    </label>
+                    <label className="block relative">
+                        <span className="block uppercase text-sm">password</span>
+                        <div className="flex border-1 w-full">
+                            <input onChange={(inp) => setPassword(inp.currentTarget.value)} type={passwordType} id="password" className="w-[85%] px-2 py-0.5 focus:outline-none focus:ring-0"/>
+                            <button className="cursor-pointer ml-2" onClick={() => togglePassword()}> {showPassword ? <FaEyeSlash/> : <FaEye/>} </button>   
+                        </div>
+                    </label>
+                </div>
+                <div className="flex flex-col w-[60%] items-center gap-3">
+                    <button onClick={signIn} className="border-1 py-2 w-full cursor-pointer font-bold transition-all hover:shadow-md hover:shadow-slate-400 hover:bg-gray-100">
+                        LOGIN 
+                    </button>
+                    <Link href={"register"} className="underline text-sm text-blue-600">
+                        Register
+                    </Link>
+                </div>
             </div>
         </div>
     </div>

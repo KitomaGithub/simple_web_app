@@ -3,7 +3,7 @@
 import BlogCard from "@/app/component/BlogCard";
 import PageLayout from "@/app/component/PageLayout";
 import { supabase } from "@/utils/supabase";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function BlogList ({
     params
@@ -12,16 +12,18 @@ export default function BlogList ({
 }) {
 
     const [blogUserId, setBlogUserId] = useState<string>("");
-    const [blogs, setBlogs] = useState([]);
+    const [blogs, setBlogs] = useState<Props[]>([]);
 
-    async function initialize(){
+    const initialize = useCallback(async () => {
 
         const userId = (await params).blogUserId
         setBlogUserId(userId);
 
-        const {data} = await supabase.from("blogs").select("*").eq("author", userId);
-        setBlogs(data)
-    }
+        const {data} = await supabase.from("blogs").select("*").eq("author", userId).order("created_at", {"ascending": false});
+        if(data != null){
+            setBlogs(data)
+        }
+    }, [params])
 
     const [didItRun, setDidItRun] = useState<boolean>( false);
     useEffect(() => {
@@ -29,7 +31,7 @@ export default function BlogList ({
             initialize();
             setDidItRun(true);
         } 
-    })
+    },[didItRun, initialize])
 
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(6);
@@ -40,7 +42,8 @@ export default function BlogList ({
                 {
                     blogs.map((blog, i) => {
                         if(i >= min && i < max){
-                            const d = new Date(blog["created_at"]);
+                            const blogDate: string = blog.created_at != undefined ? blog.created_at : "";
+                            const d = new Date(blogDate);
 
                             return <BlogCard
                                 key={i} title={blog["title"]} author={blog["author"]} id={blog["id"]} content={blog["content"]} created_at={d.toLocaleDateString() + " " + d.toLocaleTimeString()}
@@ -72,4 +75,12 @@ export default function BlogList ({
             </div>
         </div>
     </PageLayout>
+}
+
+interface Props {
+    content?: string,
+    title? : string,
+    id?: string | number,
+    author?: string,
+    created_at?: string;
 }

@@ -23,8 +23,7 @@ export default function BlogList ({
     const [editId, setEditId] = useState("");
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user);
-    const blogs = useSelector((state: RootState) => state.blogs.content);
-    const [currentBlog, setCurrentBlog] = useState([])
+    const [currentBlog, setCurrentBlog] = useState("")
 
     const [didItRun, setDidItRun] = useState<boolean>(false);
     useEffect(() => {
@@ -39,7 +38,7 @@ export default function BlogList ({
                 window.location.href = "/dashboard/blogs/update"
             }
 
-            setCurrentBlog(blogs?.filter(r => r.id == id)[0])
+            setCurrentBlog(blogs?.filter(r => r.id == id)[0].content)
             setTitle(blogs?.filter(r => r.id == id)[0].title)
             setEditorContent(blogs?.filter(r => r.id == id)[0].content)
             setEditId(id);
@@ -79,7 +78,7 @@ export default function BlogList ({
 
                 <label className="block my-4">
                     <span className="block text-xl uppercase font-bold">Content</span>
-                    <Tiptap content={currentBlog["content"]} getContent={setContent} className="border-1 p-3 rounded-2xl min-h-60 focus:ring-0 focus:outline-none text-xl"/>
+                    <Tiptap content={currentBlog} getContent={setContent} className="border-1 p-3 rounded-2xl min-h-60 focus:ring-0 focus:outline-none text-xl"/>
                 </label>
             </div>
             <button onClick={updateBlog} className="text-xl border-1 uppercase w-full py-4 rounded-xl cursor-pointer hover:shadow-xl hover:bg-gray-200">
