@@ -39,7 +39,7 @@ export default function PageLayout({children, title, inDashboard}: Props) {
                 <button onClick={() => window.location.href = "/login"} className={`text-xl font-bold px-5 py-2 rounded-xl border-1 cursor-pointer hover:bg-gray-200 ${user.isSignedIn ? "hidden" : ""}`}>
                     Log In
                 </button>
-                <button onClick={() => window.location.href = "/regoster"} className={`text-xl font-bold px-5 py-2 rounded-xl border-1 mr-10 cursor-pointer hover:bg-gray-200 ${user.isSignedIn ? "hidden" : ""}`}>
+                <button onClick={() => window.location.href = "/register"} className={`text-xl font-bold px-5 py-2 rounded-xl border-1 mr-10 cursor-pointer hover:bg-gray-200 ${user.isSignedIn ? "hidden" : ""}`}>
                     Register
                 </button>
             </div>

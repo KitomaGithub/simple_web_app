@@ -1,17 +1,16 @@
-FROM node:20
+FROM node:24
 
 WORKDIR /app
 
 COPY package*.json ./
 
 RUN npm install
+RUN npm install react-redux @reduxjs/toolkit react-persist
 
 COPY . .
 
 RUN npm run build
 
-RUN npm i -g serve
-
 EXPOSE 3000
 
-CMD ["serve", "-s", "dist", "-l", "3000"]
+CMD ["npm" , "run", "start"]
